@@ -63,10 +63,12 @@ class Game {
             if(this.player.didCollide(obstacle)){
                 console.log('collision');
                 this.lives -= 1;
+                document.getElementById('lives').innerText = this.lives;
                 obstacle.element.remove();
             } else if(obstacle.top > this.gameScreen.offsetHeight) {
                 console.log('out of screen');
                 this.score += 1;
+                document.getElementById('score').innerText = this.score;
                 obstacle.element.remove();
             } else {
                 obstaclesToKeep.push(obstacle)
