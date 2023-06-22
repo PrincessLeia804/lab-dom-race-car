@@ -11,6 +11,7 @@ class Game {
         this.lives = 3;
         this.obstacles = [];
         this.isGameOver = false;
+        this.animateId;
     }
 
     start() {
@@ -31,17 +32,22 @@ class Game {
         //update game state
         this.update()
         
-        if(Math.random() > 0.98 && this.obstacles.length < 1) {
-            this.obstacles.push(new Obstacle(this.gameScreen));
+        // if(Math.random() > 0.98 && this.obstacles.length < 1) {
+        //     this.obstacles.push(new Obstacle(this.gameScreen));
+        // }
+
+        console.log(this.animateId)
+        if (this.animateId % 150 === 0) {
+          this.obstacles.push(new Obstacle(this.gameScreen))
         }
 
         // check if game is finished
-        if(this.lives <= 0) {
+        if(this.isGameOver) {
             console.log(("Game Over"));
             this.endGame();
         }else{
         // recursive func: will ensure consistent frame rate of screen
-        requestAnimationFrame(() => this.gameLoop()) // arrow function needed to access method
+            this.animateId = requestAnimationFrame(() => this.gameLoop()) // arrow function needed to access method
         }
     }
 
@@ -60,6 +66,7 @@ class Game {
                 obstacle.element.remove();
             } else if(obstacle.top > this.gameScreen.offsetHeight) {
                 console.log('out of screen');
+                this.score += 1;
                 obstacle.element.remove();
             } else {
                 obstaclesToKeep.push(obstacle)
@@ -67,6 +74,11 @@ class Game {
         })
         this.obstacles = obstaclesToKeep
         console.log(this.obstacles);
+
+        // check lives-count
+        if(this.lives <= 0) {
+            this.isGameOver = true;
+    }
     }
 
     endGame() {
@@ -75,7 +87,6 @@ class Game {
             obstacle.element.remove();
         })
 
-        this.isGameOver = true;
 
         this.gameScreen.style.display = 'none';
         this.gameEndScreen.style.display = 'block';
