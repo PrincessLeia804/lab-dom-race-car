@@ -4,6 +4,7 @@ class Game {
         this.startScreen = document.getElementById('game-intro')
         this.gameScreen = document.getElementById('game-screen')
         this.gameEndScreen = document.getElementById('game-end')
+        this.gameContainer = document.getElementById('game-container')
         this.height = 600
         this.width = 500
         this.player = new Player(this.gameScreen)
@@ -23,6 +24,7 @@ class Game {
         this.startScreen.style.display = 'none'
         // show game screen, if flex-container display: flex
         this.gameScreen.style.display = 'block'
+        this.gameContainer.style.display = 'flex'
 
         //start game loop
         this.gameLoop()
@@ -91,6 +93,6 @@ class Game {
 
 
         this.gameScreen.style.display = 'none';
-        this.gameEndScreen.style.display = 'block';
+        this.gameEndScreen.style.display = 'flex';
     }
 }
